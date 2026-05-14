@@ -79,8 +79,8 @@ const DashboardHome = () => {
         className="flex flex-col md:flex-row md:items-center justify-between gap-4"
       >
         <div>
-          <h1 className="text-3xl font-bold text-white">Dashboard Overview</h1>
-          <p className="text-brand-light mt-1">Here's what's happening with your startup today.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">Dashboard Overview</h1>
+          <p className="text-brand-light mt-1 text-sm sm:text-base">Here's what's happening with your startup today.</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="px-4 py-2 bg-brand-blue/10 border border-brand-blue/20 rounded-xl text-brand-blue text-sm font-medium">
@@ -90,7 +90,7 @@ const DashboardHome = () => {
       </motion.div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {statCards.map((card, index) => (
           <motion.div
             key={index}
@@ -107,8 +107,8 @@ const DashboardHome = () => {
                 {card.trend}
               </span>
             </div>
-            <h3 className="text-3xl font-bold text-white mb-1">{card.value}</h3>
-            <p className="text-brand-light text-sm">{card.label}</p>
+            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-1">{card.value}</h3>
+            <p className="text-brand-light text-xs sm:text-sm">{card.label}</p>
           </motion.div>
         ))}
       </div>

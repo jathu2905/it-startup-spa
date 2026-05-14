@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, Code, User, LogOut } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import Logo from './Logo';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -44,11 +45,9 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className="p-2 bg-brand-blue/20 rounded-lg border border-brand-blue/30">
-              <Code className="text-brand-blue" size={24} />
-            </div>
-            <span className="text-xl font-bold text-white tracking-tight">IT<span className="text-brand-blue">Startup</span></span>
+          <Link to="/" className="flex flex-col items-start leading-none group">
+            <Logo className="group-hover:scale-105 transition-transform duration-300" />
+            <span className="text-[0.5rem] tracking-[0.3em] text-brand-light/40 font-orbitron mt-1.5 ml-1">AI FOR THE NEXT GENERATION</span>
           </Link>
 
           {/* Desktop Nav */}

@@ -14,12 +14,13 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import Logo from '../Logo';
 
 const AdminLayout = () => {
   const { logout, currentUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const menuItems = [
     { path: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
@@ -42,13 +43,13 @@ const AdminLayout = () => {
     <div className="flex min-h-screen bg-brand-dark text-white font-sans overflow-hidden">
       {/* Mobile Sidebar Overlay */}
       <AnimatePresence>
-        {!isSidebarOpen && (
+        {isSidebarOpen && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setIsSidebarOpen(true)}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 lg:hidden"
           />
         )}
       </AnimatePresence>
@@ -59,14 +60,12 @@ const AdminLayout = () => {
       >
         <div className="flex flex-col h-full">
           {/* Logo Section */}
-          <div className="p-8 flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-brand-blue rounded-xl flex items-center justify-center shadow-lg shadow-brand-blue/30">
-                <span className="text-white font-bold text-xl">A</span>
-              </div>
-              <span className="text-xl font-bold tracking-tight">Admin <span className="text-brand-blue">Panel</span></span>
+          <div className="p-8 flex items-center justify-between border-b border-white/5">
+            <Link to="/" className="flex flex-col items-start leading-none">
+              <Logo />
+              <span className="text-[0.4rem] tracking-[0.3em] text-brand-light/40 font-orbitron mt-1 ml-1">ADMIN PANEL</span>
             </Link>
-            <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-brand-light hover:text-white">
+            <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-brand-light hover:text-white p-2">
               <X size={24} />
             </button>
           </div>
@@ -79,6 +78,7 @@ const AdminLayout = () => {
                 <Link
                   key={item.path}
                   to={item.path}
+                  onClick={() => setIsSidebarOpen(false)}
                   className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all group ${isActive ? 'bg-brand-blue text-white shadow-lg shadow-brand-blue/20' : 'text-brand-light hover:bg-white/5 hover:text-white'}`}
                 >
                   <item.icon size={20} className={isActive ? 'text-white' : 'text-brand-blue group-hover:scale-110 transition-transform'} />
@@ -119,7 +119,7 @@ const AdminLayout = () => {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         {/* Topbar */}
-        <header className="h-20 flex items-center justify-between px-8 bg-brand-dark/50 backdrop-blur-md border-b border-white/5 sticky top-0 z-30">
+        <header className="h-20 flex items-center justify-between px-4 sm:px-8 bg-brand-dark/50 backdrop-blur-md border-b border-white/5 sticky top-0 z-30">
           <div className="flex items-center gap-4">
             <button 
               onClick={() => setIsSidebarOpen(true)}
@@ -127,24 +127,25 @@ const AdminLayout = () => {
             >
               <Menu size={24} />
             </button>
-            <h2 className="text-xl font-bold">
+            <h2 className="text-lg sm:text-xl font-bold truncate max-w-[150px] sm:max-w-none">
               {menuItems.find(item => item.path === location.pathname)?.label || 'Dashboard'}
             </h2>
           </div>
           
           <div className="flex items-center gap-4">
-            <div className="hidden md:flex flex-col items-end">
-              <span className="text-xs text-brand-light">Status</span>
-              <span className="text-sm font-medium flex items-center gap-1.5 text-green-400">
+            <div className="flex flex-col items-end">
+              <span className="text-[10px] text-brand-light uppercase tracking-widest opacity-60">System</span>
+              <span className="text-xs sm:text-sm font-medium flex items-center gap-1.5 text-green-400">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                Live System
+                <span className="hidden sm:inline">Live System</span>
+                <span className="sm:hidden">Live</span>
               </span>
             </div>
           </div>
         </header>
 
         {/* Page Content */}
-        <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar">
           <div className="max-w-7xl mx-auto">
             <Outlet />
           </div>

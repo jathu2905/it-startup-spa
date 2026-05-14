@@ -1,7 +1,7 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -21,22 +21,24 @@ import ManagePortfolio from './pages/admin/ManagePortfolio';
 function App() {
   return (
     <div className="min-h-screen bg-brand-dark selection:bg-brand-blue selection:text-white">
-      <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/agreement" element={<Agreement />} />
-        <Route 
-          path="/place-order" 
-          element={
-            <ProtectedRoute>
-              <Order />
-            </ProtectedRoute>
-          } 
-        />
+        {/* Public Routes with Navbar and Footer */}
+        <Route element={<><Navbar /><Outlet /><Footer /></>}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/agreement" element={<Agreement />} />
+          <Route 
+            path="/place-order" 
+            element={
+              <ProtectedRoute>
+                <Order />
+              </ProtectedRoute>
+            } 
+          />
+        </Route>
 
-        {/* Admin Routes */}
+        {/* Admin Routes - No Navbar or Footer */}
         <Route 
           path="/admin" 
           element={
@@ -52,7 +54,6 @@ function App() {
           <Route path="portfolio" element={<ManagePortfolio />} />
         </Route>
       </Routes>
-      <Footer />
     </div>
   );
 }
